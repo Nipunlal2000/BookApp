@@ -1,0 +1,28 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="d-sm-flex justify-content-between align-items-start">
+    <div>
+        <h4 class="card-title card-title-dash">Create Book</h4>
+        <p class="card-subtitle card-subtitle-dash"> Add author first </p>
+    </div>
+    <div>
+        <a class="btn btn-primary btn-lg text-white mb-0 me-0" type="button" href="{% url 'author' %}"><i
+                class="mdi mdi-account-plus"></i>Add Author</a>
+    </div>
+</div>
+
+
+<form method="post" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <input type="submit" class="btn btn-success mt-2" value="Submit ">
+
+</form>
+
+{% endblock %}

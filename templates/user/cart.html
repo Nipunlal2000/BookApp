@@ -1,0 +1,94 @@
+{% extends 'user/userbase.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="d-sm-flex justify-content-between align-items-start">
+    <div>
+        <h4 class="card-title card-title-dash">Your Cart</h4>
+    </div>
+</div>
+
+{% if not cart_items %}
+
+<p>Your cart is empty</p>
+
+{% else %}
+
+
+<div class="table-responsive  mt-1">
+    <table class="table select-table">
+        <thead>
+        <tr>
+            <th>Sl no.</th>
+            <th>Book Name</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Action</th>
+            <th>Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in cart_items %}
+        <tr>
+            <td>
+                <div class="d-flex ">
+                    <div>
+                        <h6>{{forloop.counter}}</h6>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <h6>{{item.book.title}}</h6>
+            </td>
+            <td>
+                <h6>{{item.book.author}}</h6>
+            </td>
+            <td>
+                <h6>{{item.book.price}}</h6>
+            </td>
+            <td>
+                <h6><a href="{% url 'remove_cart' item.id %}">Remove</a></h6>
+            </td>
+            {% if item.quantity <= item.book.quantity %}
+            <td>
+                <a type="button" href="{% url 'decrease_quantity' item.id %}"
+                   class="badge badge-opacity-warning text-decoration-none"> <i class="fa-solid fa-minus"></i></a>
+                <input type="number" name="quantity" value="{{ item.quantity }}">
+                <a type="button" href="{% url 'increase_quantity' item.id %}"
+                   class="badge badge-opacity-warning text-decoration-none"> <i class="fa-solid fa-plus"></i></a>
+
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endif %}
+
+<form action="{% url 'create_checkout_session' %}" method="post">
+    {% csrf_token %}
+
+    <div class="col-md-6 col-lg-6 grid-margin stretch-card">
+        <div class="card card-rounded">
+            <div class="card-body card-rounded">
+                <h4 class="card-title  card-title-dash">Cart: {{ total_items }}</h4>
+                <div class="list align-items-center border-bottom py-2">
+                    <div class="wrapper w-100">
+                        <p class="mb-2 fw-medium"> Total Price: {{ total_price }} </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <button type="submit" id="chekout-button" class="btn btn-danger btn-lg text-white mb-0 me-0"><i class="fa-solid fa-credit-card"></i>CHECKOUT</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

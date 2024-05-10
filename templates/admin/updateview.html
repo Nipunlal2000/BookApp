@@ -1,0 +1,19 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+
+{% block content %}
+<div>
+    <h4 class="card-title card-title-dash mb-3">Update Book</h4>
+</div>
+
+<form method="post" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <input type="submit" class="btn btn-success mt-2" value="Update">
+</form>
+
+
+{% endblock %}

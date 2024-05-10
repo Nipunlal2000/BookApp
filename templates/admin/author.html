@@ -1,0 +1,18 @@
+
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<form action="" method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+
+    <input type="submit" class="btn btn-success" value="save">
+
+</form>
+
+{% endblock %}

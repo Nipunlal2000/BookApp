@@ -1,0 +1,94 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="d-sm-flex justify-content-between align-items-start">
+    <div>
+        <h4 class="card-title card-title-dash">List of Books</h4>
+        <p class="card-subtitle card-subtitle-dash"> Add author first </p>
+    </div>
+    <div>
+        <a class="btn btn-primary btn-lg text-white mb-0 me-0" type="button" href="{% url 'createbook' %}"><i
+                class="mdi mdi-account-plus"></i>Create book</a>
+    </div>
+</div>
+
+
+<div class="table-responsive  mt-1">
+    <table class="table select-table">
+        <thead>
+        <tr>
+            <th>Sl no.</th>
+            <th>Book Name</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if books %}
+
+            {% for book in books %}
+            <tr>
+
+                <td>
+                    <div class="d-flex ">
+                        <div>
+                            <h6>{{forloop.counter}}</h6>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <h6>{{book.title}}</h6>
+                </td>
+                <td>
+                    <h6>{{book.author}}</h6>
+                </td>
+                <td>
+                    <h6>{{book.price}}</h6>
+                </td>
+                <td>
+                    <a type="button" href="{% url 'detailview' book.id %}" class="badge badge-opacity-info">Details</a>
+                    <a type="button" href="{% url 'updateview' book.id %}" class="badge badge-opacity-success">Update</a>
+                    <a type="button" href="{% url 'deleteview' book.id %}" class="badge badge-opacity-danger">Delete</a>
+                </td>
+                </td>
+            </tr>
+            {% endfor %}
+
+        {% endif %}
+        </tbody>
+    </table>
+
+    <!--    pagination-->
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center mt-5">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            {% for num in page.paginator.page_range%}
+
+            <li class="page-item {% if page.number == num %}activate{% endif %}">
+                <a class="page-link" href="?page={{num}}"> {{ num }} </a></li>
+
+            {% endfor%}
+
+            <li class="page-item">
+
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+</div>
+
+
+{% endblock %}
